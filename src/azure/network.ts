@@ -1,18 +1,64 @@
 import * as azure_native from "@pulumi/azure-native"
 import * as network from "@pulumi/azure-native/network"
 import * as pulumi from "@pulumi/pulumi"
-interface MachineDefinitions {
+
+/**
+ * NetworkDefinitions is a set of properties that describe the network to be created
+ *
+ * ## required params
+ * @param resourceGroupName The name of the resource group to create the network in
+ * @param region The region to create the network in
+ *
+ * ## optional params
+ * @param vnetName The name of the virtual network to create
+ * @param subnetName The name of the subnet to create
+ * @param publicIpName The name of the public IP to create
+ * @param nicName The name of the network interface to create
+ */
+export interface NetworkDefinitions {
+  // required properties
+  /** The name of the resource group you want the network to be created in */
   resourceGroupName: string
+  /** The region you want the network to be created in */
   region: "westeurope" | string
 
   // optional properties
+  /** The name of the virtual network you want to create - defaults to `nixos-vnet` */
   vnetName?: string
+  /** The name of the subnet you want to create - defaults to `nixos-subnet` */
   subnetName?: string
+  /** The name of the public IP you want to create - defaults to `nixos-public-ip` */
   publicIpName?: string
+  /** The name of the network interface you want to create - defaults to `nixos-nic` */
   nicName?: string
 }
 
-export class NixosNetwork extends pulumi.ComponentResource {
+/**
+ * AzureNetwork is a component that creates a virtual network, subnet, public IP, and network interface
+ * for a NixOS virtual machine
+ *
+ * ## required params
+ * @param name The name of the component
+ * @param cOpts The network definitions - see {@link NetworkDefinitions}
+ * @param opts The pulumi component options
+ *
+ * ## public properties
+ * @property networkId - The ID of the network interface
+ * @property publicIPAddress - The public IP address of the network interface
+ * @property vnetName - The name of the virtual network
+ * @property subnetName - The name of the subnet
+ * @property publicIpName - The name of the public IP
+ * @property nicName - The name of the network interface
+ *
+ * @example
+ * ```ts
+ * let network = new AzureNetwork("nixos-network", {
+ *  resourceGroupName: "resource-group",
+ *  region: "westeurope",
+ * }, {});
+ * ```
+ */
+export class AzureNetwork extends pulumi.ComponentResource {
   vnetName: string
   subnetName: string
   publicIpName: string
@@ -24,7 +70,7 @@ export class NixosNetwork extends pulumi.ComponentResource {
 
   constructor(
     name: string,
-    cOpts: MachineDefinitions,
+    cOpts: NetworkDefinitions,
     opts: pulumi.ComponentResourceOptions
   ) {
     super("pkg:index:nixos-network", name, {}, opts)
@@ -35,6 +81,7 @@ export class NixosNetwork extends pulumi.ComponentResource {
     this.nicName = cOpts.nicName || "nixos-nic"
     this.resourceGroupName = cOpts.resourceGroupName
 
+    // create the virtual network
     const virtualNetwork = new azure_native.network.VirtualNetwork(
       this.vnetName,
       {
@@ -50,6 +97,7 @@ export class NixosNetwork extends pulumi.ComponentResource {
       }
     )
 
+    // create the subnet
     const subnet = new azure_native.network.Subnet(
       cOpts.subnetName || "nixos-subnet",
       {
@@ -60,12 +108,10 @@ export class NixosNetwork extends pulumi.ComponentResource {
       { parent: this }
     )
 
+    // create the public IP address
     const publicIPAddress = new azure_native.network.PublicIPAddress(
       cOpts.publicIpName || "nixos-public-ip",
       {
-        // dnsSettings: {
-        //   domainNameLabel: "dnslbl",
-        // },
         location: cOpts.region,
         publicIpAddressName: "test-ip",
         publicIPAllocationMethod: network.IPAllocationMethod.Static,
@@ -81,8 +127,10 @@ export class NixosNetwork extends pulumi.ComponentResource {
       }
     )
 
+    // set the public IP address property, so others can access it
     this.publicIPAddress = publicIPAddress.ipAddress
 
+    // create the network interface
     const networkInterface = new azure_native.network.NetworkInterface(
       cOpts.nicName || "nixos-nic",
       {
@@ -105,8 +153,10 @@ export class NixosNetwork extends pulumi.ComponentResource {
       }
     )
 
+    // set the network interface ID property, so others can access it
     this.networkId = networkInterface.id
 
+    // register the outputs
     this.registerOutputs({
       virtualNetwork,
       subnet,

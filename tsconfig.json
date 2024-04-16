@@ -13,8 +13,8 @@
         "forceConsistentCasingInFileNames": true
     },
     "files": [
-        "./src/index.ts",
-        "./src/network.ts",
-        "./src/virtualMachine.ts",
+        "src/azure/example.ts",
+        "src/azure/network.ts",
+        "src/azure/virtualMachine.ts",
     ]
 }
