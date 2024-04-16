@@ -1,12 +1,12 @@
 {
-  "name": "pulumi-create-image",
+  "name": "pulumi-nixos-create-vm",
   "main": "./src/index.ts",
   "devDependencies": {
     "@types/node": "^18"
   },
   "dependencies": {
-    "@pulumi/azure-native": "^2.0.0",
-    "@pulumi/pulumi": "^3.0.0",
-    "mime": "^4.0.1"
+    "@pulumi/azure-native": "^2.37.0",
+    "@pulumi/aws": "6.31.0",
+    "@pulumi/pulumi": "^3.113.0"
   }
 }

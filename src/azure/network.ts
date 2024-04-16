@@ -73,7 +73,7 @@ export class AzureNetwork extends pulumi.ComponentResource {
     cOpts: NetworkDefinitions,
     opts: pulumi.ComponentResourceOptions
   ) {
-    super("pkg:index:nixos-network", name, {}, opts)
+    super("nixos-setup:azure:network", name, {}, opts)
 
     this.vnetName = cOpts.vnetName || "nixos-vnet"
     this.subnetName = cOpts.subnetName || "nixos-subnet"

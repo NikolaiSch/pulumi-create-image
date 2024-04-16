@@ -74,7 +74,7 @@ export class AzureVm extends pulumi.ComponentResource {
     cOpts: MachineDefinitions,
     opts: pulumi.ComponentResourceOptions
   ) {
-    super("pkg:index:nixos-vm", name, {}, opts)
+    super("nixos-setup:azure:vm", name, {}, opts)
 
     // Now create the VM, using the resource group and NIC allocated in NixosNetwork.
     let vm = new compute.VirtualMachine(
