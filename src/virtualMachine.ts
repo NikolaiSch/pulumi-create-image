@@ -46,7 +46,7 @@ export class NixosVm extends pulumi.ComponentResource {
           vmSize: compute.VirtualMachineSizeTypes.Standard_B1s,
         },
         osProfile: {
-          // computerName: "hostname",
+          computerName: "nixos-machine",
           adminUsername: cOpts.username,
           adminPassword: cOpts.password,
           linuxConfiguration: {

@@ -1,5 +1,6 @@
 // Copyright 2016-2020, Pulumi Corporation.  All rights reserved.
 import * as azure_native from "@pulumi/azure-native"
+import * as pulumi from "@pulumi/pulumi"
 import * as fs from "fs"
 import { NixosNetwork } from "./network"
 import { NixosVm } from "./virtualMachine"
@@ -23,7 +24,7 @@ let machine = new NixosVm(
   "nixos-vm",
   {
     region: "westeurope",
-    username: "testadmin",
+    username: "testadmin1",
     password: "Password1234!",
     resourceGroupName: rgName,
     imageReference:
@@ -34,35 +35,21 @@ let machine = new NixosVm(
   {}
 )
 
-// fs.writeFileSync(
-//   "./out.json",
-//   JSON.stringify(
-//     {
-//       machine: {
-//         ipAddress: machine.IpAddress.get(),
-//         computer: machine.Computer.get(),
-//         username: machine.Username,
-//         password: machine.Password,
-//       },
-//     },
-//     null,
-//     2
-//   )
-// )
-
-let json = JSON.stringify(
-  {
-    machine: {
-      ipAddress: machine.IpAddress.apply((ip) => ip),
-      computer: machine.Computer.apply((comp) => comp),
-      username: machine.Username,
-      password: machine.Password,
+pulumi.all([machine.IpAddress, machine.Computer]).apply(([ip, computer]) => {
+  let json = JSON.stringify(
+    {
+      machine: {
+        ipAddress: ip,
+        computer: computer,
+        username: machine.Username,
+        password: machine.Password,
+      },
     },
-  },
-  null,
-  2
-)
+    null,
+    2
+  )
 
-fs.writeFileSync("./out.json", json)
+  fs.writeFileSync("./out.json", json)
+})
 
 export { machine }
