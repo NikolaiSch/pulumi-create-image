@@ -12,9 +12,4 @@
         "noImplicitReturns": true,
         "forceConsistentCasingInFileNames": true
     },
-    "files": [
-        "src/azure/example.ts",
-        "src/azure/network.ts",
-        "src/azure/virtualMachine.ts",
-    ]
 }
