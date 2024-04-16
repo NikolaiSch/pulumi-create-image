@@ -1,8 +1,7 @@
 import * as azure_native from "@pulumi/azure-native"
 import * as pulumi from "@pulumi/pulumi"
 import * as fs from "fs"
-import { AzureNetwork } from "./network"
-import { AzureVm } from "./virtualMachine"
+import { AzureNetwork, AzureVm } from "../src"
 
 // what is the name of the resource group?
 let rgName = "nixos-group"
