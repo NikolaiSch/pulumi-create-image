@@ -1,12 +1,18 @@
 {
   "name": "pulumi-nixos-create-vm",
   "main": "./src/index.ts",
-  "devDependencies": {
-    "@types/node": "^18"
+  "scripts": {
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@pulumi/azure-native": "^2.37.0",
-    "@pulumi/aws": "6.31.0",
-    "@pulumi/pulumi": "^3.113.0"
+    "@pulumi/aws": "^6.31.0",
+    "@pulumi/pulumi": "^3.113.0",
+    "@pulumi/hcloud": "^1.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5",
+    "prettier": "^3.3.0",
+    "@types/node": "^18"
   }
 }
