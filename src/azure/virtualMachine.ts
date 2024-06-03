@@ -1,7 +1,7 @@
-import * as azure_native from "@pulumi/azure-native"
-import * as compute from "@pulumi/azure-native/compute"
-import * as pulumi from "@pulumi/pulumi"
-import { AzureNetwork } from "./network"
+import * as azure_native from "@pulumi/azure-native";
+import * as compute from "@pulumi/azure-native/compute";
+import * as pulumi from "@pulumi/pulumi";
+import { AzureNetwork } from "./network";
 
 /**
  * MachineDefinitions describes the configuration options for a new virtual machine.
@@ -17,17 +17,17 @@ import { AzureNetwork } from "./network"
 export interface MachineDefinitions {
   // required properties
   /** The name of the resource group you want the VM to be created in */
-  resourceGroupName: string
+  resourceGroupName: string;
   /** The region you want the VM to be created in */
-  region: "westeurope" | string
+  region: "westeurope" | string;
   /** The username for the VM */
-  username: string
+  username: string;
   /** The password for the VM */
-  password: string
+  password: string;
   /** The image reference for the VM, of the format: "/subscriptions/cdfae013-f7e9-4b74-84b6-8e0a9f2a9ff4/resourceGroups/nixos-group/providers/Microsoft.Compute/images/nixos-image" */
-  imageReference: string
+  imageReference: string;
   /** The network definitions - see {@link AzureNetwork} */
-  network: AzureNetwork
+  network: AzureNetwork;
 }
 
 /**
@@ -62,19 +62,19 @@ export interface MachineDefinitions {
  * ```
  */
 export class AzureVm extends pulumi.ComponentResource {
-  public ipAddress: pulumi.Output<string | undefined>
+  public ipAddress: pulumi.Output<string | undefined>;
   public computer: pulumi.Output<
     azure_native.types.output.compute.OSProfileResponse | undefined
-  >
-  public username: string
-  public password: string
+  >;
+  public username: string;
+  public password: string;
 
   constructor(
     name: string,
     cOpts: MachineDefinitions,
-    opts: pulumi.ComponentResourceOptions
+    opts: pulumi.ComponentResourceOptions,
   ) {
-    super("nixos-setup:azure:vm", name, {}, opts)
+    super("nixos-setup:azure:vm", name, {}, opts);
 
     // Now create the VM, using the resource group and NIC allocated in NixosNetwork.
     let vm = new compute.VirtualMachine(
@@ -117,19 +117,19 @@ export class AzureVm extends pulumi.ComponentResource {
       },
       {
         parent: this,
-      }
-    )
+      },
+    );
 
-    this.ipAddress = cOpts.network.publicIPAddress
-    this.computer = vm.osProfile
-    this.username = cOpts.username
-    this.password = cOpts.password
+    this.ipAddress = cOpts.network.publicIPAddress;
+    this.computer = vm.osProfile;
+    this.username = cOpts.username;
+    this.password = cOpts.password;
 
     this.registerOutputs({
       ipAddress: cOpts.network.publicIPAddress,
       host: vm.osProfile,
       username: cOpts.username,
       password: cOpts.password,
-    })
+    });
   }
 }

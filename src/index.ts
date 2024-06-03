@@ -1,2 +1,2 @@
-export * from "./aws"
-export * from "./azure"
+export * from "./aws";
+export * from "./azure";

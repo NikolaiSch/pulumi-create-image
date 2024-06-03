@@ -1,6 +1,6 @@
-import * as azure_native from "@pulumi/azure-native"
-import * as network from "@pulumi/azure-native/network"
-import * as pulumi from "@pulumi/pulumi"
+import * as azure_native from "@pulumi/azure-native";
+import * as network from "@pulumi/azure-native/network";
+import * as pulumi from "@pulumi/pulumi";
 
 /**
  * NetworkDefinitions is a set of properties that describe the network to be created
@@ -18,19 +18,19 @@ import * as pulumi from "@pulumi/pulumi"
 export interface NetworkDefinitions {
   // required properties
   /** The name of the resource group you want the network to be created in */
-  resourceGroupName: string
+  resourceGroupName: string;
   /** The region you want the network to be created in */
-  region: "westeurope" | string
+  region: "westeurope" | string;
 
   // optional properties
   /** The name of the virtual network you want to create - defaults to `nixos-vnet` */
-  vnetName?: string
+  vnetName?: string;
   /** The name of the subnet you want to create - defaults to `nixos-subnet` */
-  subnetName?: string
+  subnetName?: string;
   /** The name of the public IP you want to create - defaults to `nixos-public-ip` */
-  publicIpName?: string
+  publicIpName?: string;
   /** The name of the network interface you want to create - defaults to `nixos-nic` */
-  nicName?: string
+  nicName?: string;
 }
 
 /**
@@ -59,27 +59,27 @@ export interface NetworkDefinitions {
  * ```
  */
 export class AzureNetwork extends pulumi.ComponentResource {
-  vnetName: string
-  subnetName: string
-  publicIpName: string
-  nicName: string
-  resourceGroupName: string
+  vnetName: string;
+  subnetName: string;
+  publicIpName: string;
+  nicName: string;
+  resourceGroupName: string;
 
-  networkId: pulumi.Output<string>
-  publicIPAddress: pulumi.Output<string | undefined>
+  networkId: pulumi.Output<string>;
+  publicIPAddress: pulumi.Output<string | undefined>;
 
   constructor(
     name: string,
     cOpts: NetworkDefinitions,
-    opts: pulumi.ComponentResourceOptions
+    opts: pulumi.ComponentResourceOptions,
   ) {
-    super("nixos-setup:azure:network", name, {}, opts)
+    super("nixos-setup:azure:network", name, {}, opts);
 
-    this.vnetName = cOpts.vnetName || "nixos-vnet"
-    this.subnetName = cOpts.subnetName || "nixos-subnet"
-    this.publicIpName = cOpts.publicIpName || "nixos-public-ip"
-    this.nicName = cOpts.nicName || "nixos-nic"
-    this.resourceGroupName = cOpts.resourceGroupName
+    this.vnetName = cOpts.vnetName || "nixos-vnet";
+    this.subnetName = cOpts.subnetName || "nixos-subnet";
+    this.publicIpName = cOpts.publicIpName || "nixos-public-ip";
+    this.nicName = cOpts.nicName || "nixos-nic";
+    this.resourceGroupName = cOpts.resourceGroupName;
 
     // create the virtual network
     const virtualNetwork = new azure_native.network.VirtualNetwork(
@@ -94,8 +94,8 @@ export class AzureNetwork extends pulumi.ComponentResource {
       },
       {
         parent: this,
-      }
-    )
+      },
+    );
 
     // create the subnet
     const subnet = new azure_native.network.Subnet(
@@ -105,8 +105,8 @@ export class AzureNetwork extends pulumi.ComponentResource {
         virtualNetworkName: virtualNetwork.name,
         resourceGroupName: cOpts.resourceGroupName,
       },
-      { parent: this }
-    )
+      { parent: this },
+    );
 
     // create the public IP address
     const publicIPAddress = new azure_native.network.PublicIPAddress(
@@ -124,11 +124,11 @@ export class AzureNetwork extends pulumi.ComponentResource {
       },
       {
         parent: this,
-      }
-    )
+      },
+    );
 
     // set the public IP address property, so others can access it
-    this.publicIPAddress = publicIPAddress.ipAddress
+    this.publicIPAddress = publicIPAddress.ipAddress;
 
     // create the network interface
     const networkInterface = new azure_native.network.NetworkInterface(
@@ -150,11 +150,11 @@ export class AzureNetwork extends pulumi.ComponentResource {
       },
       {
         parent: this,
-      }
-    )
+      },
+    );
 
     // set the network interface ID property, so others can access it
-    this.networkId = networkInterface.id
+    this.networkId = networkInterface.id;
 
     // register the outputs
     this.registerOutputs({
@@ -162,6 +162,6 @@ export class AzureNetwork extends pulumi.ComponentResource {
       subnet,
       publicIPAddress,
       networkInterface,
-    })
+    });
   }
 }
