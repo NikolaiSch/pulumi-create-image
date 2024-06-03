@@ -69,7 +69,7 @@ export class HetznerVm extends pulumi.ComponentResource {
       return new hcloud.SshKey(name, {
         name: `${name}-sshkey-${key.slice(0, 8)}`,
         publicKey: key,
-      });
+      }, { parent: this });
     });
 
     const server = new hcloud.Server(name, {
@@ -78,6 +78,8 @@ export class HetznerVm extends pulumi.ComponentResource {
       serverType: cOpts.serverType,
       datacenter: cOpts.location,
       sshKeys: keys.map((key) => key.id),
+    }, {
+      parent: this,
     });
 
     this.registerOutputs({

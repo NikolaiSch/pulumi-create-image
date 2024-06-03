@@ -106,5 +106,7 @@ export class AwsVm extends pulumi.ComponentResource {
 
       ec2.publicIp.apply((x) => (this.ipAddress = x));
     });
+
+    this.registerOutputs({ ipAddress: this.ipAddress });
   }
 }
