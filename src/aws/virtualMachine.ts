@@ -8,7 +8,7 @@ import * as pulumi from "@pulumi/pulumi";
  * @param ami The AMI to use - e.g. "ami-0c55b159cbfafe1f0"
  * @param amiOwner The owner of the AMI - e.g. "099720109477"
  */
-export interface MachineDefinitions {
+export interface AwsMachineDefinitions {
   instanceType: aws.ec2.InstanceType;
   ami: string;
   amiOwner: string;
@@ -19,7 +19,7 @@ export interface MachineDefinitions {
  * using the provided machine definitions.
  *
  * @param name The name of the component
- * @param cOpts The machine definitions - see {@link MachineDefinitions}
+ * @param cOpts The machine definitions - see {@link AwsMachineDefinitions}
  * @param opts The pulumi component options
  *
  * @property ipAddress - The public IP address of the VM
@@ -39,7 +39,7 @@ export class AwsVm extends pulumi.ComponentResource {
 
   constructor(
     name: string,
-    cOpts: MachineDefinitions,
+    cOpts: AwsMachineDefinitions,
     opts: pulumi.ComponentResourceOptions,
   ) {
     super("nixos-setup:aws:vm", name, {}, opts);
