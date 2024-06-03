@@ -14,7 +14,7 @@ import { AzureNetwork } from "./network";
  * @param imageReference The image reference for the VM
  * @param network The network definitions - see {@link AzureNetwork} for more details
  */
-export interface MachineDefinitions {
+export interface AzureMachineDefinitions {
   // required properties
   /** The name of the resource group you want the VM to be created in */
   resourceGroupName: string;
@@ -36,7 +36,7 @@ export interface MachineDefinitions {
  *
  * ## required params
  * @param name The name of the component
- * @param cOpts The machine definitions - see {@link MachineDefinitions}
+ * @param cOpts The machine definitions - see {@link AzureMachineDefinitions}
  * @param opts The pulumi component options
  *
  * ## public properties
@@ -71,7 +71,7 @@ export class AzureVm extends pulumi.ComponentResource {
 
   constructor(
     name: string,
-    cOpts: MachineDefinitions,
+    cOpts: AzureMachineDefinitions,
     opts: pulumi.ComponentResourceOptions,
   ) {
     super("nixos-setup:azure:vm", name, {}, opts);

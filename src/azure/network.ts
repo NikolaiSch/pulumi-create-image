@@ -15,7 +15,7 @@ import * as pulumi from "@pulumi/pulumi";
  * @param publicIpName The name of the public IP to create
  * @param nicName The name of the network interface to create
  */
-export interface NetworkDefinitions {
+export interface AzureNetworkDefinitions {
   // required properties
   /** The name of the resource group you want the network to be created in */
   resourceGroupName: string;
@@ -39,7 +39,7 @@ export interface NetworkDefinitions {
  *
  * ## required params
  * @param name The name of the component
- * @param cOpts The network definitions - see {@link NetworkDefinitions}
+ * @param cOpts The network definitions - see {@link AzureNetworkDefinitions}
  * @param opts The pulumi component options
  *
  * ## public properties
@@ -70,7 +70,7 @@ export class AzureNetwork extends pulumi.ComponentResource {
 
   constructor(
     name: string,
-    cOpts: NetworkDefinitions,
+    cOpts: AzureNetworkDefinitions,
     opts: pulumi.ComponentResourceOptions,
   ) {
     super("nixos-setup:azure:network", name, {}, opts);

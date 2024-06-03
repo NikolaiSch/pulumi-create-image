@@ -1,9 +1,9 @@
-import { AzureNetwork, type NetworkDefinitions } from "./network";
-import { AzureVm, type MachineDefinitions } from "./virtualMachine";
+import { AzureNetwork, type AzureNetworkDefinitions } from "./network";
+import { type AzureMachineDefinitions, AzureVm } from "./virtualMachine";
 
 export { AzureNetwork, AzureVm };
 
 export type {
-  NetworkDefinitions as AzureNetworkDefinitions,
-  MachineDefinitions as AzureVmDefinitions,
+  AzureMachineDefinitions as AzureVmDefinitions,
+  AzureNetworkDefinitions as AzureNetworkDefinitions,
 };
