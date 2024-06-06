@@ -1,1 +1,3 @@
-export * from "./virtualMachine";
+import { HetznerMachineDefinitions, HetznerVm } from "./virtualMachine";
+
+export { HetznerMachineDefinitions, HetznerVm };
