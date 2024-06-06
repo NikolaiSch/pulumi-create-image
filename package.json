@@ -1,5 +1,5 @@
 {
-  "name": "pulumi-nixos-create-vm",
+  "name": "@nikmctrl/pulumi-nixos-create-vm",
   "main": "./src/index.ts",
   "scripts": {
     "format": "prettier --write ."
