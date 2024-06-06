@@ -1,7 +1,7 @@
 {
-  "name": "@nikolaisch/pulumi-nixos-create-vm",
+  "name": "pulumi-nixos-create-vm",
   "main": "./src/index.ts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "format": "prettier --write ."
   },
