@@ -66,6 +66,7 @@ export const HetznerCloudConfig = {
 };
 
 export const HetznerCloudImage = {
+  /** Os images, e.g. debian, ubuntu, centos, rocky, almalinux, fedora, etc. */
   os: {
     debian_10: "debian-10",
     debian_11: "debian-11",
@@ -88,6 +89,7 @@ export const HetznerCloudImage = {
     fedora_39: "fedora-39",
     fedora_40: "fedora-40",
   },
+  /** App images, e.g. lamp, wordpress, jitsi,  gitlab, etc. */
   app: {
     lamp: "lamp",
     wordpress: "wordpress",
