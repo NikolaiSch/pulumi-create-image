@@ -4,6 +4,9 @@
   "scripts": {
     "format": "prettier --write ."
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "dependencies": {
     "@pulumi/azure-native": "^2.37.0",
     "@pulumi/aws": "^6.31.0",
