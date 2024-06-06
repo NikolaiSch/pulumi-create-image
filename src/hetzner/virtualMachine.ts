@@ -24,10 +24,11 @@ import * as pulumi from "@pulumi/pulumi";
  * ```
  */
 export interface HetznerMachineDefinitions {
-  serverType: hcloud.ServerArgs["serverType"];
-  location: hcloud.ServerArgs["datacenter"];
-  image: hcloud.ServerArgs["image"];
+  serverType: string;
+  location: string;
+  image: string;
   pubSSHKeys: string[];
+  cloudConfig?: string;
 }
 
 /**
@@ -78,6 +79,7 @@ export class HetznerVm extends pulumi.ComponentResource {
       serverType: cOpts.serverType,
       datacenter: cOpts.location,
       sshKeys: keys.map((key) => key.id),
+      userData: cOpts.cloudConfig,
     }, {
       parent: this,
     });

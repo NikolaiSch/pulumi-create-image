@@ -1,3 +1,5 @@
+import { nixosCloudConfig } from "./cloudConfig";
+
 const shared = {
   x86: {
     /** 1 intel vcpu, 2GB ram, 20GB disk space, 20TB traffic, locations: Germany, Finland; €4.55 p/m */
@@ -57,4 +59,49 @@ export const HetznerLocations = {
   Germany: "nbg1",
   Finland: "hel1",
   USA: "ewr1",
+};
+
+export const HetznerCloudConfig = {
+  nixos: nixosCloudConfig,
+};
+
+export const HetznerCloudImage = {
+  os: {
+    debian_10: "debian-10",
+    debian_11: "debian-11",
+    debian_12: "debian-12",
+
+    ubuntu_20_04: "ubuntu-20.04",
+    ubuntu_22_04: "ubuntu-22.04",
+    ubuntu_24_04: "ubuntu-24.04",
+
+    centos_stream_8: "centos-stream-8",
+    centos_stream_9: "centos-stream-9",
+
+    rocky_8: "rocky-8",
+    rocky_9: "rocky-9",
+
+    almalinux_8: "alma-8",
+    almalinux_9: "alma-9",
+
+    fedora_38: "fedora-38",
+    fedora_39: "fedora-39",
+    fedora_40: "fedora-40",
+  },
+  app: {
+    lamp: "lamp",
+    wordpress: "wordpress",
+    jitsi: "jitsi",
+    nextcloud: "nextcloud",
+    docker_ce: "docker-ce",
+    gitlab: "gitlab",
+    ruby: "ruby",
+    go: "go",
+    prometheus_grafana: "prometheus-grafana",
+    collab_tools: "collab-tools",
+    wireguard: "wireguard",
+    owncast: "owncast",
+    photoprism: "photoprism",
+    rustdesk: "rustdesk",
+  },
 };

@@ -1,4 +1,6 @@
 import {
+  HetznerCloudConfig,
+  HetznerCloudImage,
   HetznerLocations,
   HetznerMachineDefinitions,
   HetznerServerTypes,
@@ -6,10 +8,12 @@ import {
 } from "../src";
 
 const myConfig = {
-  image: "ubuntu-20.04",
+  image: HetznerCloudImage.os.debian_12,
   location: HetznerLocations.Germany,
-  pubSSHKeys: ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3..."],
   serverType: HetznerServerTypes.shared.x86.CX11,
+  cloudConfig: HetznerCloudConfig.nixos,
+
+  pubSSHKeys: ["ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3..."],
 } satisfies HetznerMachineDefinitions;
 
 const myHetznerVm = new HetznerVm("nixos-vm", myConfig, {});
